@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 import Header from "./components/Header";
@@ -16,6 +16,16 @@ function App() {
 
     setPacientes(pacientesActualizados);
   };
+  useEffect(() => {
+    const obtenerLS = () => {
+      const pacientesLS = JSON.parse(localStorage.getItem("pacientes")) ?? [];
+      setPacientes(pacientesLS);
+    };
+    obtenerLS();
+  });
+  useEffect(() => {
+    localStorage.setItem("pacientes", JSON.stringify(pacientes));
+  }, [pacientes]);
   return (
     <div className="container mx-auto mt-20">
       <Header></Header>
